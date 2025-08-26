@@ -1,133 +1,167 @@
 # Fish Species Classifier
 
-A full-stack application that identifies freshwater fish species from user-uploaded images using PyTorch and transfer learning.
+A full-stack machine learning application that identifies fish species from user-uploaded images using PyTorch and transfer learning.
 
-## Features
+## 🚀 Quick Start
 
-- **ML Model**: PyTorch 2.x with ResNet18 transfer learning
-- **Backend**: FastAPI with image classification endpoint
-- **Frontend**: React + TypeScript with TailwindCSS
-- **Target Species**: Rainbow Trout, Largemouth Bass, Chinook Salmon
-
-## Project Structure
-
-```
-fish-classifier/
-├── backend/
-│   ├── main.py          # FastAPI application
-│   ├── model.py         # Model loading and preprocessing
-│   ├── requirements.txt # Python dependencies
-│   └── train.py         # Model training script
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   └── ImageUpload.tsx
-│   │   └── App.tsx
-│   ├── package.json
-│   └── vite.config.ts
-├── README.md
-└── .gitignore
-```
-
-## Setup Instructions
-
-### 1. Model Training
-
-First, you need to train the model with your fish image dataset:
-
-1. **Prepare Dataset**: Create a directory structure with subfolders for each species:
-   ```
-   dataset/
-   ├── rainbow_trout/
-   ├── largemouth_bass/
-   └── chinook_salmon/
-   ```
-   
-   Each subfolder should contain at least 200 images of the respective fish species.
-
-2. **Train Model**: Run the training script from the backend directory:
-   ```bash
-   cd backend
-   python train.py --data_dir ../dataset --epochs 20 --batch_size 32
-   ```
-   
-   This will create `model.pt` in the backend directory.
-
-### 2. Backend Setup
-
-1. **Install Dependencies**:
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   ```
-
-2. **Start FastAPI Server**:
-   ```bash
-   cd backend
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
-   ```
-   
-   The API will be available at `http://localhost:8000`
-
-### 3. Frontend Setup
-
-1. **Install Dependencies**:
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-2. **Start Development Server**:
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-   
-   The frontend will be available at `http://localhost:5173`
-
-## API Usage
-
-### Classify Fish Endpoint
-
-**POST** `/classify-fish`
-
-**Request**: Multipart form data with image file
-- `file`: Image file (JPEG, PNG, etc.)
-
-**Response**:
-```json
-{
-  "species": "rainbow_trout",
-  "confidence": 0.95
-}
-```
-
-**Example using curl**:
-```bash
-curl -X POST "http://localhost:8000/classify-fish" \
-     -H "accept: application/json" \
-     -H "Content-Type: multipart/form-data" \
-     -F "file=@fish_image.jpg"
-```
-
-## Model Details
-
-- **Architecture**: ResNet18 with transfer learning
-- **Input Size**: 224x224 pixels
-- **Preprocessing**: Resize, normalize (ImageNet stats)
-- **Data Augmentation**: RandomHorizontalFlip, RandomRotation, ColorJitter
-- **Training**: Adam optimizer, CrossEntropyLoss
-
-## Requirements
-
-- Python 3.11+
-- PyTorch 2.x
-- CUDA-compatible GPU (optional, for faster training)
+### Prerequisites
+- Python 3.8+
 - Node.js 16+
 - npm or yarn
 
-## Troubleshooting
+### One-Command Setup
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd fish-classification
 
-- **Model not found**: Ensure you've trained the model and `model.pt` exists in the backend directory
-- **CUDA errors**: The model will automatically fall back to CPU if GPU is unavailable
-- **Port conflicts**: Change the port numbers in the startup commands if needed
+# Run the setup script (this will take several minutes)
+./setup_project.sh
+```
+
+The setup script will:
+- ✅ Check your system dependencies
+- 📦 Create Python virtual environment
+- 📦 Install all Python and Node.js dependencies
+- 📥 Download the fish dataset (3.24GB)
+- 🎉 Get you ready to run the application
+
+## 🏗️ Project Structure
+
+```
+fish-classification/
+├── backend/                    # Python FastAPI backend
+│   ├── main.py               # FastAPI application with endpoints
+│   ├── model.py              # PyTorch model loading and inference
+│   ├── train.py              # Model training script
+│   ├── prepare_dataset.py    # Dataset organization utility
+│   └── requirements.txt      # Python dependencies
+├── frontend/                  # React TypeScript frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── ImageUpload.tsx  # Main image upload component
+│   │   ├── App.tsx              # Main application component
+│   │   └── main.tsx             # Application entry point
+│   ├── package.json             # Node.js dependencies
+│   └── vite.config.ts           # Vite build configuration
+├── dataset/                    # Fish image dataset (created by setup)
+├── setup_project.sh            # Automated setup script
+├── download_kaggle_dataset.py  # Dataset download utility
+├── README.md                   # This file
+└── .gitignore                  # Git ignore patterns
+```
+
+## 🐟 Available Fish Species
+
+The model is trained on 9 different fish species:
+- **Trout** - Freshwater fish
+- **Sea Bass** - Marine fish
+- **Gilt-Head Bream** - Mediterranean fish
+- **Red Sea Bream** - Marine fish
+- **Red Mullet** - Marine fish
+- **Horse Mackerel** - Marine fish
+- **Black Sea Sprat** - Marine fish
+- **Striped Red Mullet** - Marine fish
+- **Shrimp** - Crustacean
+
+## 🚀 Running the Application
+
+### Start the Backend
+```bash
+cd backend
+source ../venv/bin/activate
+python main.py
+```
+The API will be available at `http://localhost:8000`
+
+### Start the Frontend
+```bash
+cd frontend
+npm run dev
+```
+The frontend will be available at `http://localhost:5173`
+
+## 🔧 Manual Setup (Alternative)
+
+If you prefer to set up manually:
+
+### 1. Python Backend
+```bash
+python3 -m venv venv
+source venv/bin/activate
+cd backend
+pip install -r requirements.txt
+```
+
+### 2. Node.js Frontend
+```bash
+cd frontend
+npm install
+```
+
+### 3. Download Dataset
+```bash
+python3 download_kaggle_dataset.py
+```
+
+## 📊 Dataset Details
+
+- **Source**: [A Large-Scale Fish Dataset](https://www.kaggle.com/datasets/crowww/a-large-scale-fish-dataset)
+- **Size**: 3.24GB
+- **Images**: 9,000 total (1,000 per species)
+- **Resolution**: 590x445 pixels
+- **Quality**: Professional research dataset with data augmentation
+
+## 🎯 Model Details
+
+- **Architecture**: ResNet18 with transfer learning
+- **Input Size**: 224x224 pixels (resized from 590x445)
+- **Preprocessing**: ImageNet normalization
+- **Training**: Adam optimizer, CrossEntropyLoss
+- **Data Augmentation**: Horizontal flips, rotations, color variations
+
+## 🔌 API Endpoints
+
+- `GET /` - API information
+- `GET /health` - Health check
+- `GET /classes` - Available fish species
+- `POST /classify-fish` - Image classification endpoint
+
+## 🛠️ Development
+
+### Training the Model
+```bash
+cd backend
+source ../venv/bin/activate
+python train.py --data_dir ../dataset --epochs 20
+```
+
+### Testing
+```bash
+# Test backend
+curl http://localhost:8000/health
+
+# Test classification
+curl -X POST "http://localhost:8000/classify-fish" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@your_fish_image.jpg"
+```
+
+## 📝 License
+
+This project uses the [A Large-Scale Fish Dataset](https://www.kaggle.com/datasets/crowww/a-large-scale-fish-dataset) which is licensed under the MIT License.
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📚 Resources
+
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [PyTorch Tutorials](https://pytorch.org/tutorials/)
+- [React Documentation](https://react.dev/)
+- [Dataset Paper](https://ieeexplore.ieee.org/document/9302612)

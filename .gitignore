@@ -137,3 +137,13 @@ data/
 *.csv
 *.json
 *.xml
+
+# Kaggle cache and downloaded datasets
+.cache/
+kagglehub/
+*.zip
+*.tar.gz
+
+# Downloaded fish datasets (exclude large files)
+fish_datasets/
+sample_images/
