@@ -1,4 +1,4 @@
-# Fish Species Classifier
+# 🐟 Fish Species Classifier
 
 A full-stack machine learning application that identifies fish species from user-uploaded images using PyTorch and transfer learning.
 
@@ -48,6 +48,7 @@ fish-classification/
 ├── setup_project.sh            # Automated setup script
 ├── download_kaggle_dataset.py  # Dataset download utility
 ├── README.md                   # This file
+├── PROJECT_OVERVIEW.md         # Technical project overview
 └── .gitignore                  # Git ignore patterns
 ```
 
@@ -165,3 +166,7 @@ This project uses the [A Large-Scale Fish Dataset](https://www.kaggle.com/datase
 - [PyTorch Tutorials](https://pytorch.org/tutorials/)
 - [React Documentation](https://react.dev/)
 - [Dataset Paper](https://ieeexplore.ieee.org/document/9302612)
+
+---
+
+**🎣 Happy Fish Classification!** 🐟
